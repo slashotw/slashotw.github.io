@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang='zh-TW'>
+
+<head>
+  <meta name="generator" content="Hexo 6.1.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>Python兩種方法表示sigma - 喵喵のBlog</title>
+
+  
+
+  
+    <meta name="description" content="老師剛好補充sigma就寫了w，簡單用python兩種方法寫sigma，用心打那麼多就不會被當了吧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python兩種方法表示sigma">
+<meta property="og:url" content="https://kvn1027.github.io/2022/06/21/sigmain2ways/index.html">
+<meta property="og:site_name" content="喵喵のBlog">
+<meta property="og:description" content="老師剛好補充sigma就寫了w，簡單用python兩種方法寫sigma，用心打那麼多就不會被當了吧">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/vIxcBpH.png">
+<meta property="og:image" content="https://i.imgur.com/NPKZW3x.png">
+<meta property="article:published_time" content="2022-06-21T03:11:03.000Z">
+<meta property="article:modified_time" content="2022-06-21T05:37:15.509Z">
+<meta property="article:author" content="喵喵">
+<meta property="article:tag" content="math">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/vIxcBpH.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+    
+      <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+      <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+      <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+      <link rel="manifest" href="/images/site.webmanifest">
+    
+      <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+    
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://i.imgur.com/L9B659X.jpg" onerror="javascript:this.classList.add('error');this.src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/"><div class="main">喵喵のBlog</div><div class="sub normal cap">歐 聽說你找到ㄌ偶ㄉ秘密Blog</div><div class="sub hover cap" style="opacity:0">喵!</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">Blog</a><a class="nav-item" href="/about/">關於我</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A8%99"><span class="toc-text">目標:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#codingggg"><span class="toc-text">codingggg</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gt-for"><span class="toc-text">&gt; for</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gt-%E9%81%9E%E8%BF%B4"><span class="toc-text">&gt; 遞迴</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8Bsigma"><span class="toc-text">建立sigma()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A8%AD%E7%AB%8B%E9%82%8A%E7%95%8C%E6%A2%9D%E4%BB%B6"><span class="toc-text">設立邊界條件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E9%81%9E%E8%BF%B4%E8%A6%8F%E5%89%87"><span class="toc-text">建立遞迴規則</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%96%8B%E5%A7%8B%E9%81%9E%E8%BF%B4%E3%84%8C%E3%84%A1%E3%84%8C%E3%84%A1%E3%84%8C%E3%84%A1"><span class="toc-text">開始遞迴ㄌㄡㄌㄡㄌㄡ</span></a></li></ol></li></ol></li></ol></div></div></div>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a><span class="sep"></span><a class="cap breadcrumb" href="/">網誌</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/coding/">coding</a></div><div id="post-meta">發布於&nbsp;<time datetime="2022-06-21T03:11:03.000Z">2022-06-21</time></div></div>
+
+<article class='content md post'>
+  <h1 class="article-title"><span>Python兩種方法表示sigma</span></h1>
+  <p>老師剛好補充sigma就寫了w，簡單用python兩種方法寫sigma，<del>用心打那麼多就不會被當了吧</del></p>
+<span id="more"></span>
+<p><a target="_blank" rel="noopener" href="https://github.com/KvN1027/sigma_2way_in_python">code in github</a></p>
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標:"></a>目標:</h2><p>從1連續加到100， $\sum\limits_{n = 1}^{100}{a_n}$<br>使用for loop跟function遞迴兩種方法na</p>
+<h2 id="codingggg"><a href="#codingggg" class="headerlink" title="codingggg"></a>codingggg</h2><h3 id="gt-for"><a href="#gt-for" class="headerlink" title="&gt; for"></a>&gt; for</h3><p>先從最簡單直觀的for迴圈<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">101</span>):</span><br><span class="line">    <span class="built_in">sum</span> += i</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>)</span><br></pre></td></tr></table></figure></p>
+<p>很簡單直觀ㄅ，i 就是sigma的 $a_{n}$<br>概念就是用for迴圈會把 i 依次代入range這個list裡面<br>所以i會從1、2、3、4…100 這樣<br>sum則是所有值的加總</p>
+<h3 id="gt-遞迴"><a href="#gt-遞迴" class="headerlink" title="&gt; 遞迴"></a>&gt; 遞迴</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">sigma</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">100</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">100</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> n + sigma(n+<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(sigma(<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+<p>看了之後對沒接觸過演算法的可能會覺得<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.imgur.com/vIxcBpH.png" alt=""><br>且聽我慢慢解釋…<br>建議分割視窗一邊看<a target="_blank" rel="noopener" href="https://github.com/KvN1027/sigma_2way_in_python">github</a>的code一邊讀下面的字</p>
+<h4 id="建立sigma"><a href="#建立sigma" class="headerlink" title="建立sigma()"></a>建立sigma()</h4><p>先來介紹一下函式 <code>sigma(n)</code><br>這個 <code>sigma()</code> 也就是我們的遞迴式，<br>()裡頭的 <code>n</code> 則是同等於我們sigma中 n= ，具體要等於多少則是在呼叫的時候指定，像我們第六行就指定了1，也就是從1開始，<br>而這個n在遞迴的過程中則會扮演著 $a_{n}$ 的角色。</p>
+<h4 id="設立邊界條件"><a href="#設立邊界條件" class="headerlink" title="設立邊界條件"></a>設立邊界條件</h4><p>首先我們的目標很明確，就是為了一路加到100，故第二行才會寫 <code>if n == 100:</code> ，這個也就是我們的<strong>邊界條件( boundary condition)</strong>，簡單來說就是幫我們的遞迴函式設計一個條件讓他知道什麼時候到底了，不用再繼續跑下去ㄌ。這邊設定的就是如果n跑到100就停止繼續往下遞迴。</p>
+<h4 id="建立遞迴規則"><a href="#建立遞迴規則" class="headerlink" title="建立遞迴規則"></a>建立遞迴規則</h4><p>有了結束的條件，接下來就開始寫<strong>遞迴的規則</strong>，跳到第五行 <code>return n + sigma(n+1)</code> !<br>這邊需要先了解single thread的function呼叫方式，才會比較好理解，很多初學都bye在這關，建議先去喵一下，不然會覺得我在公 <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.imgur.com/NPKZW3x.png" alt=""><br>回到第五行，先從 <code>sigma(n+1)</code> 下手，sigma的精隨就是 <strong>求和</strong> !，所以這行的用意就是一路給他加下去，透過再次呼叫 <code>sigma(n+1)</code> 的方式，讓目前的n+1，也就是把 $a_{n}$ 的n給+1。這樣一來，就跳到下一個sigma()了</p>
+<h4 id="開始遞迴ㄌㄡㄌㄡㄌㄡ"><a href="#開始遞迴ㄌㄡㄌㄡㄌㄡ" class="headerlink" title="開始遞迴ㄌㄡㄌㄡㄌㄡ"></a>開始遞迴ㄌㄡㄌㄡㄌㄡ</h4><p>最後就是 當<code>sigma(100)</code>的時候，此時就會開始一路回傳n了! 就會像下面這樣一值重複</p>
+<ol>
+<li>回傳 100 給<code>sigma(99)</code>的第五行<code>sigma(n+1)</code></li>
+<li>把<code>sigma(99)</code>的第五行<code>sigma(n+1)</code>取代為 100，就會等於99(n) + 100 </li>
+<li>回傳 99 + 100 給<code>sigma(98)</code></li>
+<li>把<code>sigma(98)</code>的第五行<code>sigma(n+1)</code>取代為 199，就會等於98(n) + 199</li>
+<li>回傳 98 + 199 給<code>sigma(97)</code></li>
+<li>把<code>sigma(97)</code>的第五行<code>sigma(n+1)</code>取代為 297，就會等於97(n) + 297</li>
+<li>…以此類推到最一開始的sigma(1)</li>
+<li>把第五行的<code>sigma(1+1)</code>取代為5049，最後回傳1(n) +  5049</li>
+<li>第六行print(sigma(1))輸出5050 讚</li>
+</ol>
+<p>結案!</p>
+
+  
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>授權條款</span></div><div class="body"><p>本文採用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 許可協議，轉載須註明出處。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下來閱讀</span></section><section class="body fs14"><a id="next" href="/2022/06/18/vscode-transparent/">VS Code背景透明化<span class="note">較早</span></a><div class="line"></div></section></div>
+
+
+
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本網誌所有文章除特別聲明外，均採用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 授權條款。轉載請註明出處。</p>
+<p>本站由 <a href="https://kvn1027.github.io/">@喵喵</a> 建立，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.6.1" title="v1.6.1">Stellar</a> 作為主題。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.6.1';
+  stellar.config = {
+    date_suffix: {
+      just: '剛剛',
+      min: '分鐘前',
+      hour: '小時前',
+      day: '天前',
+      month: '個月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

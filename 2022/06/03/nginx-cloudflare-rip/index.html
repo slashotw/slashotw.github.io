@@ -65,7 +65,11 @@
       <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
     
   
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body>
   
@@ -100,25 +104,20 @@
 <div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a><span class="sep"></span><a class="cap breadcrumb" href="/">網誌</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/coding/">coding</a></div><div id="post-meta">發布於&nbsp;<time datetime="2022-06-02T19:24:40.000Z">2022-06-03</time></div></div>
 
 <article class='content md post'>
-<h1 class="article-title"><span>Nginx繞過Cloudflare等等CDN獲取用戶真實IP</span></h1>
-<p>用一串code繞過Cloudflare等等CDN獲取用戶真實IP</p>
+  <h1 class="article-title"><span>Nginx繞過Cloudflare等等CDN獲取用戶真實IP</span></h1>
+  <p>用一串code繞過Cloudflare等等CDN獲取用戶真實IP</p>
 <span id="more"></span>
-
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某天MIS我在查看IP log時突然發現IP竟然是來自CDN，想說怎麼IP都長得差不多…<br>想了想似乎是CDN的問題，於是就查出了下列解法~<br>這樣的改法好處是，就算哪天CDN不用了，也不用修改IP獲取的方法~</p>
-<h2 id="教學"><a href="#教學" class="headerlink" title="教學"></a>教學</h2><p>在<code>/etc/nginx/nginx.conf</code>也就是預設的nginx檔案中的</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>添加下面這段</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">map</span> <span class="variable">$HTTP_CF_CONNECTING_IP</span>  <span class="variable">$clientRealIp</span> &#123;</span><br><span class="line">    &quot;&quot;    $remote_addr;</span><br><span class="line">    ~^(?P&lt;firstAddr&gt;[0-9.]+),?.*$    $firstAddr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="attribute">log_format</span>  main  <span class="string">&#x27;<span class="variable">$clientRealIp</span> [<span class="variable">$time_local</span>] &quot;<span class="variable">$request</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> &quot;<span class="variable">$http_referer</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$http_user_agent</span> <span class="variable">$remote_addr</span> <span class="variable">$request_time</span>&#x27;</span>;</span><br></pre></td></tr></table></figure>
-<p>並且在你自己設定nginx log檔案的地方使用main這個格式<br>每個人放log設定的地方不一樣，不用連路徑都要照著抄w</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="attribute">access_log</span> /var/log/nginx/access.log main;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="教學"><a href="#教學" class="headerlink" title="教學"></a>教學</h2><p>在<code>/etc/nginx/nginx.conf</code>也就是預設的nginx檔案中的<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>添加下面這段<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">map</span> <span class="variable">$HTTP_CF_CONNECTING_IP</span>  <span class="variable">$clientRealIp</span> &#123;</span><br><span class="line">    &quot;&quot;    $remote_addr;</span><br><span class="line">    ~^(?P&lt;firstAddr&gt;[0-9.]+),?.*$    $firstAddr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="attribute">log_format</span>  main  <span class="string">&#x27;<span class="variable">$clientRealIp</span> [<span class="variable">$time_local</span>] &quot;<span class="variable">$request</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> &quot;<span class="variable">$http_referer</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$http_user_agent</span> <span class="variable">$remote_addr</span> <span class="variable">$request_time</span>&#x27;</span>;</span><br></pre></td></tr></table></figure><br>並且在你自己設定nginx log檔案的地方使用main這個格式<br>每個人放log設定的地方不一樣，不用連路徑都要照著抄w<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="attribute">access_log</span> /var/log/nginx/access.log main;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><div class="tag-plugin link dis-select"><a class="link-card rich" title="NGINX,PHP获取Cloudflare传递的真实访客IP" href="https://www.bnxb.com/php/27592.html" target="_blank" rel="external nofollow noopener noreferrer"><div class="top"><div class="lazy img" data-bg="https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div><span class="desc fs12">https://www.bnxb.com/php/27592.html</span></div><div class="bottom"><span class="title">NGINX,PHP获取Cloudflare传递的真实访客IP</span><span class="desc fs12">配合宝塔面板防御CC攻击 防伪造IP 日志记</span></div></a></div>
-
+  
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>授權條款</span></div><div class="body"><p>本文採用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 許可協議，轉載須註明出處。</p>
 </div></section></div>
 
 </article>
 
 <div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下來閱讀</span></section><section class="body fs14"><a id="next" href="/2022/06/01/gunicorn01/">Gunicorn教學<span class="note">較早</span></a><div class="line"></div><a id="prev" href="/2022/06/18/vscode-transparent/">VS Code背景透明化<span class="note">較新</span></a></section></div>
+
 
 
 

@@ -34,8 +34,8 @@
 <meta property="article:published_time" content="2022-05-31T17:50:40.000Z">
 <meta property="article:modified_time" content="2022-05-31T18:20:39.020Z">
 <meta property="article:author" content="喵喵">
-<meta property="article:tag" content="python">
 <meta property="article:tag" content="web dev">
+<meta property="article:tag" content="python">
 <meta property="article:tag" content="flask">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgur.com/35b5xSR.png">
@@ -66,7 +66,11 @@
       <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
     
   
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body>
   
@@ -101,37 +105,30 @@
 <div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a><span class="sep"></span><a class="cap breadcrumb" href="/">網誌</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/coding/">coding</a></div><div id="post-meta">發布於&nbsp;<time datetime="2022-05-31T17:50:40.000Z">2022-06-01</time></div></div>
 
 <article class='content md post'>
-<h1 class="article-title"><span>Gunicorn教學</span></h1>
-<p>細數flask使用gunicorn的坑…</p>
+  <h1 class="article-title"><span>Gunicorn教學</span></h1>
+  <p>細數flask使用gunicorn的坑…</p>
 <span id="more"></span>
-
 <h2 id="你要先知道"><a href="#你要先知道" class="headerlink" title="你要先知道"></a>你要先知道</h2><blockquote>
 <p>問題都在log檔案配置上面</p>
-</blockquote>
-<blockquote>
 <p>如果用deamon不會顯示訊息</p>
-</blockquote>
-<blockquote>
 <p>如果你的flask有session驗證的部分，worker數量建議用1，不然會機率性出現HTTP 500，因為可能在<code>/</code>跟在<code>/callback</code>兩個不同路徑時會切換到不同worker導致session遺失。不然就是要把session寫在資料庫na</p>
-</blockquote>
 <h2 id="設定檔"><a href="#設定檔" class="headerlink" title="設定檔"></a>設定檔</h2><p>使用設定檔可以讓你更方便的去啟動gunicorn 不用每次都抄一堆參數，當然如果是小project根本沒差</p>
 <h3 id="path"><a href="#path" class="headerlink" title="path"></a>path</h3><p>假設今天有個flask檔案叫<code>main.py</code>，位於<code>/flaskapp/main.py</code><br>那gunicorn的設定檔就要寫在跟<code>main.py</code>同級的<code>/flaskapp/gun.conf.py</code><br>有些人可能google查到會叫你檔名用gun.conf，但在以前的版本中會出現非常多bug，建議使用<code>gun.conf.py</code>，python檔案去寫。</p>
+</blockquote>
 <h3 id="撰寫"><a href="#撰寫" class="headerlink" title="撰寫"></a>撰寫</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="comment"># 綁定要監聽的port跟ip，</span></span><br><span class="line"><span class="comment"># 假設main.app是app.run(host=&#x27;0.0.0.0&#x27;,port=&#x27;7654&#x27;)，那就這樣寫</span></span><br><span class="line">bind = <span class="string">&#x27;0.0.0.0:7654&#x27;</span> </span><br><span class="line"><span class="comment"># 同時執行的進程數，推薦為當前CPU個數*2+1</span></span><br><span class="line">workers = <span class="number">1</span>  </span><br><span class="line"><span class="comment"># 等待服務客戶的數量，最大為2048，即最大掛起的連接數</span></span><br><span class="line">backlog = <span class="number">2048</span></span><br><span class="line"><span class="comment"># sync, gevent,meinheld  </span></span><br><span class="line"><span class="comment"># 工作模式選擇，默認為sync，這裡設定為gevent異步 </span></span><br><span class="line">worker_class = <span class="string">&quot;gevent&quot;</span>  </span><br><span class="line"><span class="comment"># 默認的最大客戶端並發數量</span></span><br><span class="line">max_requests = <span class="number">2000</span></span><br><span class="line"><span class="comment"># 是否在後台運行</span></span><br><span class="line">daemon = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 當代碼有修改時，自動重啟workers。適用於開發環境。           </span></span><br><span class="line">reload = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 在keep-alive連接上等待請求的秒數，默認情況下值為2。一般設定在1~5秒之間。            </span></span><br><span class="line"><span class="comment"># 就是今天client發送請求之後要監聽多久之後才斷開，單位為秒，下面這就是5秒的意思</span></span><br><span class="line">keepalive = <span class="number">5</span></span><br><span class="line"><span class="comment"># 設置pid文件的文件名，當前使用的pid號會寫在上面</span></span><br><span class="line">pidfile = <span class="string">&#x27;./gunicore.pid&#x27;</span></span><br><span class="line"><span class="comment"># debug error warning error critical</span></span><br><span class="line">loglevel = <span class="string">&#x27;info&#x27;</span> </span><br><span class="line"><span class="comment"># 訪問、錯誤日誌(log)的路徑還有檔名</span></span><br><span class="line">accesslog = <span class="built_in">str</span>(<span class="string">&#x27;gunicorn_acess.log&#x27;</span>)</span><br><span class="line">errorlog  = <span class="built_in">str</span>(<span class="string">&#x27;gunicorn_error.log&#x27;</span>)</span><br><span class="line"><span class="comment"># log的格式</span></span><br><span class="line">access_log_format = <span class="string">&#x27;%(&#123;X-Real-IP&#125;i)s %(t)s &quot;%(r)s&quot; %(s)s %(b)s &quot;%(f)s&quot; &quot;%(a)s&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="command"><a href="#command" class="headerlink" title="command"></a>command</h2><h3 id="使用conf設定檔-啟動專案"><a href="#使用conf設定檔-啟動專案" class="headerlink" title="使用conf設定檔 啟動專案"></a>使用conf設定檔 啟動專案</h3><p>後面那個<code>main:app</code><br>main指的是要啟用的flask app的檔名 指的是<code>main.py</code><br>app指的就是在<code>main.py</code>中要啟用的module名字，就是<code>app = Flask(__name__)</code>的那個app</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gunicorn --config=gun.conf.py main:app</span><br></pre></td></tr></table></figure>
+<h2 id="command"><a href="#command" class="headerlink" title="command"></a>command</h2><h3 id="使用conf設定檔-啟動專案"><a href="#使用conf設定檔-啟動專案" class="headerlink" title="使用conf設定檔 啟動專案"></a>使用conf設定檔 啟動專案</h3><p>後面那個<code>main:app</code><br>main指的是要啟用的flask app的檔名 指的是<code>main.py</code><br>app指的就是在<code>main.py</code>中要啟用的module名字，就是<code>app = Flask(__name__)</code>的那個app<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gunicorn --config=gun.conf.py main:app</span><br></pre></td></tr></table></figure></p>
 <h3 id="查看目前所有gunicorn的pid"><a href="#查看目前所有gunicorn的pid" class="headerlink" title="查看目前所有gunicorn的pid"></a>查看目前所有gunicorn的pid</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pstree -ap | grep gunicorn</span><br></pre></td></tr></table></figure>
-<p>成功之後會看到這樣<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.imgur.com/35b5xSR.png"><br>最上面的為根進程，一定要刪根，刪子的話會刪不掉ㄛ</p>
+<p>成功之後會看到這樣<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.imgur.com/35b5xSR.png" alt=""><br>最上面的為根進程，一定要刪根，刪子的話會刪不掉ㄛ</p>
 <h3 id="刪除gunicorn任務"><a href="#刪除gunicorn任務" class="headerlink" title="刪除gunicorn任務"></a>刪除gunicorn任務</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kill -p &lt;root pid&gt;</span><br><span class="line">kill -p 17768</span><br></pre></td></tr></table></figure>
-
 <h3 id="重啟gunicorn任務"><a href="#重啟gunicorn任務" class="headerlink" title="重啟gunicorn任務"></a>重啟gunicorn任務</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kill -HUP &lt;root pid&gt;</span><br><span class="line">kill -HUP 17768</span><br></pre></td></tr></table></figure>
-
+  
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>授權條款</span></div><div class="body"><p>本文採用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 許可協議，轉載須註明出處。</p>
 </div></section></div>
 
 </article>
 
 <div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下來閱讀</span></section><section class="body fs14"><a id="next" href="/2022/05/31/cpp-spin-donut/">會轉的ASCII甜甜圈<span class="note">較早</span></a><div class="line"></div><a id="prev" href="/2022/06/03/nginx-cloudflare-rip/">Nginx繞過Cloudflare等等CDN獲取用戶真實IP<span class="note">較新</span></a></section></div>
+
 
 
 

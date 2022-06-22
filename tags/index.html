@@ -57,11 +57,7 @@
       <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
     
   
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --></head>
+</head>
 
 <body>
   
@@ -135,6 +131,18 @@
           <span class='name'>亂喵亂喵</span>
         </a>
       
+        <a class='tag' href="/tags/cpp/">
+          <span class='name'>cpp</span>
+        </a>
+      
+        <a class='tag' href="/tags/python/">
+          <span class='name'>python</span>
+        </a>
+      
+        <a class='tag' href="/tags/flask/">
+          <span class='name'>flask</span>
+        </a>
+      
         <a class='tag' href="/tags/nginx/">
           <span class='name'>nginx</span>
         </a>
@@ -153,18 +161,6 @@
       
         <a class='tag' href="/tags/vscode/">
           <span class='name'>vscode</span>
-        </a>
-      
-        <a class='tag' href="/tags/cpp/">
-          <span class='name'>cpp</span>
-        </a>
-      
-        <a class='tag' href="/tags/python/">
-          <span class='name'>python</span>
-        </a>
-      
-        <a class='tag' href="/tags/flask/">
-          <span class='name'>flask</span>
         </a>
       
     </article>
@@ -331,5 +327,20 @@
 
 
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
 </body>
 </html>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>部落格の初始化</title>
+    <url>/2022/05/31/blogstart/</url>
+    <content><![CDATA[<p>lalala 終於從匹O幫搬家了na，目前正在逐漸搬家中</p>
+<span id="more"></span>
+<h2 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h2><p>以後技術文章還有一堆有的沒的就會po到這邊ㄌ</p>
+<h2 id="comment"><a href="#comment" class="headerlink" title="comment"></a>comment</h2><p>暫時還不打算使用comment功能，如果真的有問題的話歡迎email我~</p>
+<h2 id="主站"><a href="#主站" class="headerlink" title="主站"></a>主站</h2><p>blog的連結是<a href="https://blog.meowkb.tw">https://blog.meowkb.tw</a><br>www在<a href="https://meowkb.tw">https://meowkb.tw</a></p>
+<h2 id="偶可以偷文章ㄇ"><a href="#偶可以偷文章ㄇ" class="headerlink" title="偶可以偷文章ㄇ"></a>偶可以偷文章ㄇ</h2><p>可以 但要寄email講一下，使用時標記credit:<a href="https://blog.meowkb.tw">https://blog.meowkb.tw</a>就好，不要像某個老師直接偷爛我的簡報= =</p>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>亂喵亂喵</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>會轉的ASCII甜甜圈</title>
+    <url>/2022/05/31/cpp-spin-donut/</url>
+    <content><![CDATA[<p>手把手使用三角函數打造出會轉的ASCII甜甜圈</p>
+<span id="more"></span>
+<h2 id="超級魔性"><a href="#超級魔性" class="headerlink" title="超級魔性"></a>超級魔性</h2><p><img src="https://i.imgur.com/okqYojV.png" alt=""></p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p><a href="https://replit.com/@WH108NonOne/Hui-Zhuan-De-ASCIITian-Tian-Quan#main.cpp">線上repl</a><br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">float</span> A = <span class="number">0</span>, B = <span class="number">0</span>;</span><br><span class="line">    <span class="type">float</span> i, j;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    <span class="type">float</span> z[<span class="number">1760</span>];</span><br><span class="line">    <span class="type">char</span> b[<span class="number">1760</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\x1b[2J&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span>(;;) &#123;</span><br><span class="line">        <span class="built_in">memset</span>(b,<span class="number">32</span>,<span class="number">1760</span>);</span><br><span class="line">        <span class="built_in">memset</span>(z,<span class="number">0</span>,<span class="number">7040</span>);</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>; j &lt; <span class="number">6.28</span>; j += <span class="number">0.07</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>; i &lt; <span class="number">6.28</span>; i += <span class="number">0.02</span>) &#123;</span><br><span class="line">                <span class="type">float</span> c = <span class="built_in">sin</span>(i);</span><br><span class="line">                <span class="type">float</span> d = <span class="built_in">cos</span>(j);</span><br><span class="line">                <span class="type">float</span> e = <span class="built_in">sin</span>(A);</span><br><span class="line">                <span class="type">float</span> f = <span class="built_in">sin</span>(j);</span><br><span class="line">                <span class="type">float</span> g = <span class="built_in">cos</span>(A);</span><br><span class="line">                <span class="type">float</span> h = d + <span class="number">2</span>;</span><br><span class="line">                <span class="type">float</span> D = <span class="number">1</span> / (c * h * e + f * g + <span class="number">5</span>);</span><br><span class="line">                <span class="type">float</span> l = <span class="built_in">cos</span>(i);</span><br><span class="line">                <span class="type">float</span> m = <span class="built_in">cos</span>(B);</span><br><span class="line">                <span class="type">float</span> n = <span class="built_in">sin</span>(B);</span><br><span class="line">                <span class="type">float</span> t = c * h * g - f * e;</span><br><span class="line">                <span class="type">int</span> x = <span class="number">40</span> + <span class="number">30</span> * D * (l * h * m - t * n);</span><br><span class="line">                <span class="type">int</span> y= <span class="number">12</span> + <span class="number">15</span> * D * (l * h * n + t * m);</span><br><span class="line">                <span class="type">int</span> o = x + <span class="number">80</span> * y;</span><br><span class="line">                <span class="type">int</span> N = <span class="number">8</span> * ((f * e - c * d * g) * m - c * d * e - f * g - l * d * n);</span><br><span class="line">                <span class="keyword">if</span>(<span class="number">22</span> &gt; y &amp;&amp; y &gt; <span class="number">0</span> &amp;&amp; x &gt; <span class="number">0</span> &amp;&amp; <span class="number">80</span> &gt; x &amp;&amp; D &gt; z[o]) &#123;</span><br><span class="line">                    z[o] = D;</span><br><span class="line">                    b[o] = <span class="string">&quot;.,-~:;=!*#$@&quot;</span>[N &gt; <span class="number">0</span> ? N : <span class="number">0</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\x1b[H&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(k = <span class="number">0</span>; k &lt; <span class="number">1761</span>; k++) &#123;</span><br><span class="line">            <span class="built_in">putchar</span>(k % <span class="number">80</span> ? b[k] : <span class="number">10</span>);</span><br><span class="line">            A += <span class="number">0.00004</span>;</span><br><span class="line">            B += <span class="number">0.00002</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">usleep</span>(<span class="number">30000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>cpp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Gunicorn教學</title>
+    <url>/2022/06/01/gunicorn01/</url>
+    <content><![CDATA[<p>細數flask使用gunicorn的坑…</p>
+<span id="more"></span>
+<h2 id="你要先知道"><a href="#你要先知道" class="headerlink" title="你要先知道"></a>你要先知道</h2><blockquote>
+<p>問題都在log檔案配置上面</p>
+<p>如果用deamon不會顯示訊息</p>
+<p>如果你的flask有session驗證的部分，worker數量建議用1，不然會機率性出現HTTP 500，因為可能在<code>/</code>跟在<code>/callback</code>兩個不同路徑時會切換到不同worker導致session遺失。不然就是要把session寫在資料庫na</p>
+<h2 id="設定檔"><a href="#設定檔" class="headerlink" title="設定檔"></a>設定檔</h2><p>使用設定檔可以讓你更方便的去啟動gunicorn 不用每次都抄一堆參數，當然如果是小project根本沒差</p>
+<h3 id="path"><a href="#path" class="headerlink" title="path"></a>path</h3><p>假設今天有個flask檔案叫<code>main.py</code>，位於<code>/flaskapp/main.py</code><br>那gunicorn的設定檔就要寫在跟<code>main.py</code>同級的<code>/flaskapp/gun.conf.py</code><br>有些人可能google查到會叫你檔名用gun.conf，但在以前的版本中會出現非常多bug，建議使用<code>gun.conf.py</code>，python檔案去寫。</p>
+</blockquote>
+<h3 id="撰寫"><a href="#撰寫" class="headerlink" title="撰寫"></a>撰寫</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="comment"># 綁定要監聽的port跟ip，</span></span><br><span class="line"><span class="comment"># 假設main.app是app.run(host=&#x27;0.0.0.0&#x27;,port=&#x27;7654&#x27;)，那就這樣寫</span></span><br><span class="line">bind = <span class="string">&#x27;0.0.0.0:7654&#x27;</span> </span><br><span class="line"><span class="comment"># 同時執行的進程數，推薦為當前CPU個數*2+1</span></span><br><span class="line">workers = <span class="number">1</span>  </span><br><span class="line"><span class="comment"># 等待服務客戶的數量，最大為2048，即最大掛起的連接數</span></span><br><span class="line">backlog = <span class="number">2048</span></span><br><span class="line"><span class="comment"># sync, gevent,meinheld  </span></span><br><span class="line"><span class="comment"># 工作模式選擇，默認為sync，這裡設定為gevent異步 </span></span><br><span class="line">worker_class = <span class="string">&quot;gevent&quot;</span>  </span><br><span class="line"><span class="comment"># 默認的最大客戶端並發數量</span></span><br><span class="line">max_requests = <span class="number">2000</span></span><br><span class="line"><span class="comment"># 是否在後台運行</span></span><br><span class="line">daemon = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 當代碼有修改時，自動重啟workers。適用於開發環境。           </span></span><br><span class="line">reload = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 在keep-alive連接上等待請求的秒數，默認情況下值為2。一般設定在1~5秒之間。            </span></span><br><span class="line"><span class="comment"># 就是今天client發送請求之後要監聽多久之後才斷開，單位為秒，下面這就是5秒的意思</span></span><br><span class="line">keepalive = <span class="number">5</span></span><br><span class="line"><span class="comment"># 設置pid文件的文件名，當前使用的pid號會寫在上面</span></span><br><span class="line">pidfile = <span class="string">&#x27;./gunicore.pid&#x27;</span></span><br><span class="line"><span class="comment"># debug error warning error critical</span></span><br><span class="line">loglevel = <span class="string">&#x27;info&#x27;</span> </span><br><span class="line"><span class="comment"># 訪問、錯誤日誌(log)的路徑還有檔名</span></span><br><span class="line">accesslog = <span class="built_in">str</span>(<span class="string">&#x27;gunicorn_acess.log&#x27;</span>)</span><br><span class="line">errorlog  = <span class="built_in">str</span>(<span class="string">&#x27;gunicorn_error.log&#x27;</span>)</span><br><span class="line"><span class="comment"># log的格式</span></span><br><span class="line">access_log_format = <span class="string">&#x27;%(&#123;X-Real-IP&#125;i)s %(t)s &quot;%(r)s&quot; %(s)s %(b)s &quot;%(f)s&quot; &quot;%(a)s&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="command"><a href="#command" class="headerlink" title="command"></a>command</h2><h3 id="使用conf設定檔-啟動專案"><a href="#使用conf設定檔-啟動專案" class="headerlink" title="使用conf設定檔 啟動專案"></a>使用conf設定檔 啟動專案</h3><p>後面那個<code>main:app</code><br>main指的是要啟用的flask app的檔名 指的是<code>main.py</code><br>app指的就是在<code>main.py</code>中要啟用的module名字，就是<code>app = Flask(__name__)</code>的那個app<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gunicorn --config=gun.conf.py main:app</span><br></pre></td></tr></table></figure></p>
+<h3 id="查看目前所有gunicorn的pid"><a href="#查看目前所有gunicorn的pid" class="headerlink" title="查看目前所有gunicorn的pid"></a>查看目前所有gunicorn的pid</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pstree -ap | grep gunicorn</span><br></pre></td></tr></table></figure>
+<p>成功之後會看到這樣<br><img src="https://i.imgur.com/35b5xSR.png" alt=""><br>最上面的為根進程，一定要刪根，刪子的話會刪不掉ㄛ</p>
+<h3 id="刪除gunicorn任務"><a href="#刪除gunicorn任務" class="headerlink" title="刪除gunicorn任務"></a>刪除gunicorn任務</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kill -p &lt;root pid&gt;</span><br><span class="line">kill -p 17768</span><br></pre></td></tr></table></figure>
+<h3 id="重啟gunicorn任務"><a href="#重啟gunicorn任務" class="headerlink" title="重啟gunicorn任務"></a>重啟gunicorn任務</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kill -HUP &lt;root pid&gt;</span><br><span class="line">kill -HUP 17768</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>web dev</tag>
+        <tag>flask</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx繞過Cloudflare等等CDN獲取用戶真實IP</title>
+    <url>/2022/06/03/nginx-cloudflare-rip/</url>
+    <content><![CDATA[<p>用一串code繞過Cloudflare等等CDN獲取用戶真實IP</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某天MIS我在查看IP log時突然發現IP竟然是來自CDN，想說怎麼IP都長得差不多…<br>想了想似乎是CDN的問題，於是就查出了下列解法~<br>這樣的改法好處是，就算哪天CDN不用了，也不用修改IP獲取的方法~</p>
+<h2 id="教學"><a href="#教學" class="headerlink" title="教學"></a>教學</h2><p>在<code>/etc/nginx/nginx.conf</code>也就是預設的nginx檔案中的<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>添加下面這段<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">map</span> <span class="variable">$HTTP_CF_CONNECTING_IP</span>  <span class="variable">$clientRealIp</span> &#123;</span><br><span class="line">    &quot;&quot;    $remote_addr;</span><br><span class="line">    ~^(?P&lt;firstAddr&gt;[0-9.]+),?.*$    $firstAddr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="attribute">log_format</span>  main  <span class="string">&#x27;<span class="variable">$clientRealIp</span> [<span class="variable">$time_local</span>] &quot;<span class="variable">$request</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> &quot;<span class="variable">$http_referer</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$http_user_agent</span> <span class="variable">$remote_addr</span> <span class="variable">$request_time</span>&#x27;</span>;</span><br></pre></td></tr></table></figure><br>並且在你自己設定nginx log檔案的地方使用main這個格式<br>每個人放log設定的地方不一樣，不用連路徑都要照著抄w<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="attribute">access_log</span> /var/log/nginx/access.log main;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><div class="tag-plugin link dis-select"><a class="link-card rich" title="NGINX,PHP获取Cloudflare传递的真实访客IP" href="https://www.bnxb.com/php/27592.html" target="_blank" rel="external nofollow noopener noreferrer"><div class="top"><div class="lazy img" data-bg="https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div><span class="desc fs12">https://www.bnxb.com/php/27592.html</span></div><div class="bottom"><span class="title">NGINX,PHP获取Cloudflare传递的真实访客IP</span><span class="desc fs12">配合宝塔面板防御CC攻击 防伪造IP 日志记</span></div></a></div>]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>web dev</tag>
+        <tag>nginx</tag>
+        <tag>cloudflare</tag>
+        <tag>ctf</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python兩種方法表示sigma</title>
+    <url>/2022/06/21/sigmain2ways/</url>
+    <content><![CDATA[<p>老師剛好補充sigma就寫了w，簡單用python兩種方法寫sigma，<del>用心打那麼多就不會被當了吧</del></p>
+<span id="more"></span>
+<p><a href="https://github.com/KvN1027/sigma_2way_in_python">code in github</a></p>
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標:"></a>目標:</h2><p>從1連續加到100， $\sum\limits_{n = 1}^{100}{a_n}$<br>使用for loop跟function遞迴兩種方法na</p>
+<h2 id="codingggg"><a href="#codingggg" class="headerlink" title="codingggg"></a>codingggg</h2><h3 id="gt-for"><a href="#gt-for" class="headerlink" title="&gt; for"></a>&gt; for</h3><p>先從最簡單直觀的for迴圈<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">101</span>):</span><br><span class="line">    <span class="built_in">sum</span> += i</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>)</span><br></pre></td></tr></table></figure></p>
+<p>很簡單直觀ㄅ，i 就是sigma的 $a_{n}$<br>概念就是用for迴圈會把 i 依次代入range這個list裡面<br>所以i會從1、2、3、4…100 這樣<br>sum則是所有值的加總</p>
+<h3 id="gt-遞迴"><a href="#gt-遞迴" class="headerlink" title="&gt; 遞迴"></a>&gt; 遞迴</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">sigma</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">100</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">100</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> n + sigma(n+<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(sigma(<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<p>看了之後對沒接觸過演算法的可能會覺得<br><img src="https://i.imgur.com/vIxcBpH.png" alt=""><br>且聽我慢慢解釋…<br>建議分割視窗一邊看<a href="https://github.com/KvN1027/sigma_2way_in_python">github</a>的code一邊讀下面的字</p>
+<h4 id="建立sigma"><a href="#建立sigma" class="headerlink" title="建立sigma()"></a>建立sigma()</h4><p>先來介紹一下函式 <code>sigma(n)</code><br>這個 <code>sigma()</code> 也就是我們的遞迴式，<br>()裡頭的 <code>n</code> 則是同等於我們sigma中 n= ，具體要等於多少則是在呼叫的時候指定，像我們第六行就指定了1，也就是從1開始，<br>而這個n在遞迴的過程中則會扮演著 $a_{n}$ 的角色。</p>
+<h4 id="設立邊界條件"><a href="#設立邊界條件" class="headerlink" title="設立邊界條件"></a>設立邊界條件</h4><p>首先我們的目標很明確，就是為了一路加到100，故第二行才會寫 <code>if n == 100:</code> ，這個也就是我們的<strong>邊界條件( boundary condition)</strong>，簡單來說就是幫我們的遞迴函式設計一個條件讓他知道什麼時候到底了，不用再繼續跑下去ㄌ。這邊設定的就是如果n跑到100就停止繼續往下遞迴。</p>
+<h4 id="建立遞迴規則"><a href="#建立遞迴規則" class="headerlink" title="建立遞迴規則"></a>建立遞迴規則</h4><p>有了結束的條件，接下來就開始寫<strong>遞迴的規則</strong>，跳到第五行 <code>return n + sigma(n+1)</code> !<br>這邊需要先了解single thread的function呼叫方式，才會比較好理解，很多初學都bye在這關，建議先去喵一下，不然會覺得我在公 <img src="https://i.imgur.com/NPKZW3x.png" alt=""><br>回到第五行，先從 <code>sigma(n+1)</code> 下手，sigma的精隨就是 <strong>求和</strong> !，所以這行的用意就是一路給他加下去，透過再次呼叫 <code>sigma(n+1)</code> 的方式，讓目前的n+1，也就是把 $a_{n}$ 的n給+1。這樣一來，就跳到下一個sigma()了</p>
+<h4 id="開始遞迴ㄌㄡㄌㄡㄌㄡ"><a href="#開始遞迴ㄌㄡㄌㄡㄌㄡ" class="headerlink" title="開始遞迴ㄌㄡㄌㄡㄌㄡ"></a>開始遞迴ㄌㄡㄌㄡㄌㄡ</h4><p>最後就是 當<code>sigma(100)</code>的時候，此時就會開始一路回傳n了! 就會像下面這樣一值重複</p>
+<ol>
+<li>回傳 100 給<code>sigma(99)</code>的第五行<code>sigma(n+1)</code></li>
+<li>把<code>sigma(99)</code>的第五行<code>sigma(n+1)</code>取代為 100，就會等於99(n) + 100 </li>
+<li>回傳 99 + 100 給<code>sigma(98)</code></li>
+<li>把<code>sigma(98)</code>的第五行<code>sigma(n+1)</code>取代為 199，就會等於98(n) + 199</li>
+<li>回傳 98 + 199 給<code>sigma(97)</code></li>
+<li>把<code>sigma(97)</code>的第五行<code>sigma(n+1)</code>取代為 297，就會等於97(n) + 297</li>
+<li>…以此類推到最一開始的sigma(1)</li>
+<li>把第五行的<code>sigma(1+1)</code>取代為5049，最後回傳1(n) +  5049</li>
+<li>第六行print(sigma(1))輸出5050 讚</li>
+</ol>
+<p>結案!</p>
+]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VS Code背景透明化</title>
+    <url>/2022/06/18/vscode-transparent/</url>
+    <content><![CDATA[<p>告別醜醜bg，打造windows敲碼舒適環境</p>
+<span id="more"></span>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>到VS Codeㄉ延伸模組裡安裝<code>GlassIt-VSC</code><br><img src="https://i.imgur.com/xZdmLsF.png" alt=""></p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>ctrl+alt+z 增加透明度<br>ctrl+alt+c 減少透明度</p>
+<p>大功告成 輕鬆簡單</p>
+]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>vscode</tag>
+      </tags>
+  </entry>
+</search>

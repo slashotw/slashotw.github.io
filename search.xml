@@ -60,6 +60,42 @@
       </tags>
   </entry>
   <entry>
+    <title>解決python linebot &quot;cannot import name &#39;Mapping&#39; from &#39;collections&#39;&quot;問題</title>
+    <url>/2022/07/28/linebotimporterror/</url>
+    <content><![CDATA[<p>解決import linebot的版本問題</p>
+<span id="more"></span>
+<h2 id="問題描述"><a href="#問題描述" class="headerlink" title="問題描述"></a>問題描述</h2><p>在使用網上基於flask的linebot範例時產生一下報錯:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;C:\Users\User\Desktop\line-bot-tutorial-master\main.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">    from linebot import (</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\linebot\__init__.py&quot;, line 21, in &lt;module&gt;</span><br><span class="line">    from .api import (  # noqa</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\linebot\api.py&quot;, line 21, in &lt;module&gt;</span><br><span class="line">    from .http_client import HttpClient, RequestsHttpClient</span><br><span class="line">dule&gt;</span><br><span class="line">    import requests</span><br><span class="line">le&gt;</span><br><span class="line">    import urllib3</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\__init__.py&quot;, line 8, in &lt;module&gt;</span><br><span class="line">    from .connectionpool import (</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 29, in &lt;module&gt;</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 39, in &lt;module&gt;</span><br><span class="line">    from .util.ssl_ import (</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\__init__.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">    from .connection import is_connection_dropped</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\wait.py&quot;, line 1, in &lt;modul    from .selectors import (</span><br><span class="line">&lt;module&gt;</span><br><span class="line">    from collections import namedtuple, Mapping</span><br><span class="line">ImportError: cannot import name &#x27;Mapping&#x27; from &#x27;collections&#x27; (C:\Users\User\AppData\Local\Programs\Python\Python310\lib\collections\__init__.py)</span><br></pre></td></tr></table></figure></p>
+<h2 id="問題解決"><a href="#問題解決" class="headerlink" title="問題解決"></a>問題解決</h2><p>爬了億下文，問題就出在<code>linebot</code>這個包裡的<code>urllib3</code>、<code>requesrs</code>兩個模塊的版本問題<br>使用pip指令將<code>urllib3</code>跟<code>requests</code>移除後<br>先重新安裝<code>urllib3</code>到1.26.7版，再重新安裝<code>requests</code>到2.26版即可<br>command:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip uninstall urllib3</span><br><span class="line">pip uninstall requests</span><br><span class="line">pip install urllib3==1.26.7</span><br><span class="line">pip install requests==2.26</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>web dev</tag>
+        <tag>flask</tag>
+        <tag>linebot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx繞過Cloudflare等等CDN獲取用戶真實IP</title>
+    <url>/2022/06/03/nginx-cloudflare-rip/</url>
+    <content><![CDATA[<p>用一串code繞過Cloudflare等等CDN獲取用戶真實IP</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某天MIS我在查看IP log時突然發現IP竟然是來自CDN，想說怎麼IP都長得差不多…<br>想了想似乎是CDN的問題，於是就查出了下列解法~<br>這樣的改法好處是，就算哪天CDN不用了，也不用修改IP獲取的方法~</p>
+<h2 id="教學"><a href="#教學" class="headerlink" title="教學"></a>教學</h2><p>在<code>/etc/nginx/nginx.conf</code>也就是預設的nginx檔案中的<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>添加下面這段<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">map</span> <span class="variable">$HTTP_CF_CONNECTING_IP</span>  <span class="variable">$clientRealIp</span> &#123;</span><br><span class="line">    &quot;&quot;    $remote_addr;</span><br><span class="line">    ~^(?P&lt;firstAddr&gt;[0-9.]+),?.*$    $firstAddr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="attribute">log_format</span>  main  <span class="string">&#x27;<span class="variable">$clientRealIp</span> [<span class="variable">$time_local</span>] &quot;<span class="variable">$request</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> &quot;<span class="variable">$http_referer</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$http_user_agent</span> <span class="variable">$remote_addr</span> <span class="variable">$request_time</span>&#x27;</span>;</span><br></pre></td></tr></table></figure><br>並且在你自己設定nginx log檔案的地方使用main這個格式<br>每個人放log設定的地方不一樣，不用連路徑都要照著抄w<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="attribute">access_log</span> /var/log/nginx/access.log main;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><div class="tag-plugin link dis-select"><a class="link-card rich" title="NGINX,PHP获取Cloudflare传递的真实访客IP" href="https://www.bnxb.com/php/27592.html" target="_blank" rel="external nofollow noopener noreferrer"><div class="top"><div class="lazy img" data-bg="https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div><span class="desc fs12">https://www.bnxb.com/php/27592.html</span></div><div class="bottom"><span class="title">NGINX,PHP获取Cloudflare传递的真实访客IP</span><span class="desc fs12">配合宝塔面板防御CC攻击 防伪造IP 日志记</span></div></a></div>]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>web dev</tag>
+        <tag>nginx</tag>
+        <tag>cloudflare</tag>
+        <tag>ctf</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python兩種方法表示sigma</title>
     <url>/2022/06/21/sigmain2ways/</url>
     <content><![CDATA[<p>老師剛好補充sigma就寫了w，簡單用python兩種方法寫sigma，<del>用心打那麼多就不會被當了吧</del></p>
@@ -92,24 +128,6 @@
       </categories>
       <tags>
         <tag>math</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Nginx繞過Cloudflare等等CDN獲取用戶真實IP</title>
-    <url>/2022/06/03/nginx-cloudflare-rip/</url>
-    <content><![CDATA[<p>用一串code繞過Cloudflare等等CDN獲取用戶真實IP</p>
-<span id="more"></span>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某天MIS我在查看IP log時突然發現IP竟然是來自CDN，想說怎麼IP都長得差不多…<br>想了想似乎是CDN的問題，於是就查出了下列解法~<br>這樣的改法好處是，就算哪天CDN不用了，也不用修改IP獲取的方法~</p>
-<h2 id="教學"><a href="#教學" class="headerlink" title="教學"></a>教學</h2><p>在<code>/etc/nginx/nginx.conf</code>也就是預設的nginx檔案中的<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>添加下面這段<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">map</span> <span class="variable">$HTTP_CF_CONNECTING_IP</span>  <span class="variable">$clientRealIp</span> &#123;</span><br><span class="line">    &quot;&quot;    $remote_addr;</span><br><span class="line">    ~^(?P&lt;firstAddr&gt;[0-9.]+),?.*$    $firstAddr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="attribute">log_format</span>  main  <span class="string">&#x27;<span class="variable">$clientRealIp</span> [<span class="variable">$time_local</span>] &quot;<span class="variable">$request</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> &quot;<span class="variable">$http_referer</span>&quot; &#x27;</span></span><br><span class="line">                  <span class="string">&#x27;<span class="variable">$http_user_agent</span> <span class="variable">$remote_addr</span> <span class="variable">$request_time</span>&#x27;</span>;</span><br></pre></td></tr></table></figure><br>並且在你自己設定nginx log檔案的地方使用main這個格式<br>每個人放log設定的地方不一樣，不用連路徑都要照著抄w<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="attribute">access_log</span> /var/log/nginx/access.log main;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><div class="tag-plugin link dis-select"><a class="link-card rich" title="NGINX,PHP获取Cloudflare传递的真实访客IP" href="https://www.bnxb.com/php/27592.html" target="_blank" rel="external nofollow noopener noreferrer"><div class="top"><div class="lazy img" data-bg="https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div><span class="desc fs12">https://www.bnxb.com/php/27592.html</span></div><div class="bottom"><span class="title">NGINX,PHP获取Cloudflare传递的真实访客IP</span><span class="desc fs12">配合宝塔面板防御CC攻击 防伪造IP 日志记</span></div></a></div>]]></content>
-      <categories>
-        <category>coding</category>
-      </categories>
-      <tags>
-        <tag>web dev</tag>
-        <tag>nginx</tag>
-        <tag>cloudflare</tag>
-        <tag>ctf</tag>
       </tags>
   </entry>
   <entry>

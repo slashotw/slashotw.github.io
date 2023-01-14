@@ -159,24 +159,6 @@
       </tags>
   </entry>
   <entry>
-    <title>解決python linebot &quot;cannot import name &#39;Mapping&#39; from &#39;collections&#39;&quot;問題</title>
-    <url>/2022/07/28/linebotimporterror/</url>
-    <content><![CDATA[<p>解決import linebot的版本問題</p>
-<span id="more"></span>
-<h2 id="問題描述"><a href="#問題描述" class="headerlink" title="問題描述"></a>問題描述</h2><p>在使用網上基於flask的linebot範例時產生一下報錯:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;C:\Users\User\Desktop\line-bot-tutorial-master\main.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">    from linebot import (</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\linebot\__init__.py&quot;, line 21, in &lt;module&gt;</span><br><span class="line">    from .api import (  # noqa</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\linebot\api.py&quot;, line 21, in &lt;module&gt;</span><br><span class="line">    from .http_client import HttpClient, RequestsHttpClient</span><br><span class="line">dule&gt;</span><br><span class="line">    import requests</span><br><span class="line">le&gt;</span><br><span class="line">    import urllib3</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\__init__.py&quot;, line 8, in &lt;module&gt;</span><br><span class="line">    from .connectionpool import (</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 29, in &lt;module&gt;</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 39, in &lt;module&gt;</span><br><span class="line">    from .util.ssl_ import (</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\__init__.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">    from .connection import is_connection_dropped</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\wait.py&quot;, line 1, in &lt;modul    from .selectors import (</span><br><span class="line">&lt;module&gt;</span><br><span class="line">    from collections import namedtuple, Mapping</span><br><span class="line">ImportError: cannot import name &#x27;Mapping&#x27; from &#x27;collections&#x27; (C:\Users\User\AppData\Local\Programs\Python\Python310\lib\collections\__init__.py)</span><br></pre></td></tr></table></figure></p>
-<h2 id="問題解決"><a href="#問題解決" class="headerlink" title="問題解決"></a>問題解決</h2><p>爬了億下文，問題就出在<code>linebot</code>這個包裡的<code>urllib3</code>、<code>requesrs</code>兩個模塊的版本問題<br>使用pip指令將<code>urllib3</code>跟<code>requests</code>移除後<br>先重新安裝<code>urllib3</code>到1.26.7版，再重新安裝<code>requests</code>到2.26版即可<br>command:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip uninstall urllib3</span><br><span class="line">pip uninstall requests</span><br><span class="line">pip install urllib3==1.26.7</span><br><span class="line">pip install requests==2.26</span><br></pre></td></tr></table></figure></p>
-]]></content>
-      <categories>
-        <category>coding</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>web dev</tag>
-        <tag>flask</tag>
-        <tag>linebot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Nginx繞過Cloudflare等等CDN獲取用戶真實IP</title>
     <url>/2022/06/03/nginx-cloudflare-rip/</url>
     <content><![CDATA[<p>用一串code繞過Cloudflare等等CDN獲取用戶真實IP</p>
@@ -243,6 +225,24 @@
       </categories>
       <tags>
         <tag>vscode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解決python linebot &quot;cannot import name &#39;Mapping&#39; from &#39;collections&#39;&quot;問題</title>
+    <url>/2022/07/28/linebotimporterror/</url>
+    <content><![CDATA[<p>解決import linebot的版本問題</p>
+<span id="more"></span>
+<h2 id="問題描述"><a href="#問題描述" class="headerlink" title="問題描述"></a>問題描述</h2><p>在使用網上基於flask的linebot範例時產生一下報錯:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;C:\Users\User\Desktop\line-bot-tutorial-master\main.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">    from linebot import (</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\linebot\__init__.py&quot;, line 21, in &lt;module&gt;</span><br><span class="line">    from .api import (  # noqa</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\linebot\api.py&quot;, line 21, in &lt;module&gt;</span><br><span class="line">    from .http_client import HttpClient, RequestsHttpClient</span><br><span class="line">dule&gt;</span><br><span class="line">    import requests</span><br><span class="line">le&gt;</span><br><span class="line">    import urllib3</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\__init__.py&quot;, line 8, in &lt;module&gt;</span><br><span class="line">    from .connectionpool import (</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connectionpool.py&quot;, line 29, in &lt;module&gt;</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\connection.py&quot;, line 39, in &lt;module&gt;</span><br><span class="line">    from .util.ssl_ import (</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\__init__.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">    from .connection import is_connection_dropped</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\connection.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">  File &quot;C:\Users\User\AppData\Local\Programs\Python\Python310\lib\site-packages\urllib3\util\wait.py&quot;, line 1, in &lt;modul    from .selectors import (</span><br><span class="line">&lt;module&gt;</span><br><span class="line">    from collections import namedtuple, Mapping</span><br><span class="line">ImportError: cannot import name &#x27;Mapping&#x27; from &#x27;collections&#x27; (C:\Users\User\AppData\Local\Programs\Python\Python310\lib\collections\__init__.py)</span><br></pre></td></tr></table></figure></p>
+<h2 id="問題解決"><a href="#問題解決" class="headerlink" title="問題解決"></a>問題解決</h2><p>爬了億下文，問題就出在<code>linebot</code>這個包裡的<code>urllib3</code>、<code>requesrs</code>兩個模塊的版本問題<br>使用pip指令將<code>urllib3</code>跟<code>requests</code>移除後<br>先重新安裝<code>urllib3</code>到1.26.7版，再重新安裝<code>requests</code>到2.26版即可<br>command:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip uninstall urllib3</span><br><span class="line">pip uninstall requests</span><br><span class="line">pip install urllib3==1.26.7</span><br><span class="line">pip install requests==2.26</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>web dev</tag>
+        <tag>flask</tag>
+        <tag>linebot</tag>
       </tags>
   </entry>
 </search>

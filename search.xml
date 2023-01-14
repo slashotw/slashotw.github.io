@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>部落格の初始化</title>
+    <url>/2022/05/31/blogstart/</url>
+    <content><![CDATA[<p>lalala 終於從匹O幫搬家了na，目前正在逐漸搬家中</p>
+<span id="more"></span>
+<h2 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h2><p>以後技術文章還有一堆有的沒的就會po到這邊ㄌ</p>
+<h2 id="comment"><a href="#comment" class="headerlink" title="comment"></a>comment</h2><p>暫時還不打算使用comment功能，如果真的有問題的話歡迎email我~</p>
+<h2 id="主站"><a href="#主站" class="headerlink" title="主站"></a>主站</h2><p>blog的連結是<a href="https://blog.meowkb.tw">https://blog.meowkb.tw</a><br>www在<a href="https://meowkb.tw">https://meowkb.tw</a></p>
+<h2 id="偶可以偷文章ㄇ"><a href="#偶可以偷文章ㄇ" class="headerlink" title="偶可以偷文章ㄇ"></a>偶可以偷文章ㄇ</h2><p>可以 但要寄email講一下，使用時標記credit:<a href="https://blog.meowkb.tw">https://blog.meowkb.tw</a>就好，不要像某個老師直接偷爛我的簡報= =</p>
+]]></content>
+      <categories>
+        <category>misc</category>
+      </categories>
+      <tags>
+        <tag>亂喵亂喵</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>台大CTPS 課程筆記</title>
     <url>/2022/07/30/NTU_CTPS2022/</url>
     <content><![CDATA[<p>台大 CTPS解決問題理論與實務 筆記</p>
@@ -100,23 +117,6 @@
       </tags>
   </entry>
   <entry>
-    <title>部落格の初始化</title>
-    <url>/2022/05/31/blogstart/</url>
-    <content><![CDATA[<p>lalala 終於從匹O幫搬家了na，目前正在逐漸搬家中</p>
-<span id="more"></span>
-<h2 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h2><p>以後技術文章還有一堆有的沒的就會po到這邊ㄌ</p>
-<h2 id="comment"><a href="#comment" class="headerlink" title="comment"></a>comment</h2><p>暫時還不打算使用comment功能，如果真的有問題的話歡迎email我~</p>
-<h2 id="主站"><a href="#主站" class="headerlink" title="主站"></a>主站</h2><p>blog的連結是<a href="https://blog.meowkb.tw">https://blog.meowkb.tw</a><br>www在<a href="https://meowkb.tw">https://meowkb.tw</a></p>
-<h2 id="偶可以偷文章ㄇ"><a href="#偶可以偷文章ㄇ" class="headerlink" title="偶可以偷文章ㄇ"></a>偶可以偷文章ㄇ</h2><p>可以 但要寄email講一下，使用時標記credit:<a href="https://blog.meowkb.tw">https://blog.meowkb.tw</a>就好，不要像某個老師直接偷爛我的簡報= =</p>
-]]></content>
-      <categories>
-        <category>misc</category>
-      </categories>
-      <tags>
-        <tag>亂喵亂喵</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>會轉的ASCII甜甜圈</title>
     <url>/2022/05/31/cpp-spin-donut/</url>
     <content><![CDATA[<p>手把手使用三角函數打造出會轉的ASCII甜甜圈</p>
@@ -195,22 +195,6 @@
       </tags>
   </entry>
   <entry>
-    <title>VS Code背景透明化</title>
-    <url>/2022/06/18/vscode-transparent/</url>
-    <content><![CDATA[<p>告別醜醜bg，打造windows敲碼舒適環境</p>
-<span id="more"></span>
-<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>到VS Codeㄉ延伸模組裡安裝<code>GlassIt-VSC</code><br><img src="https://i.imgur.com/xZdmLsF.png" alt=""></p>
-<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>ctrl+alt+z 增加透明度<br>ctrl+alt+c 減少透明度</p>
-<p>大功告成 輕鬆簡單</p>
-]]></content>
-      <categories>
-        <category>coding</category>
-      </categories>
-      <tags>
-        <tag>vscode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python兩種方法表示sigma</title>
     <url>/2022/06/21/sigmain2ways/</url>
     <content><![CDATA[<p>老師剛好補充sigma就寫了w，簡單用python兩種方法寫sigma，<del>用心打那麼多就不會被當了吧</del></p>
@@ -243,6 +227,22 @@
       </categories>
       <tags>
         <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VS Code背景透明化</title>
+    <url>/2022/06/18/vscode-transparent/</url>
+    <content><![CDATA[<p>告別醜醜bg，打造windows敲碼舒適環境</p>
+<span id="more"></span>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>到VS Codeㄉ延伸模組裡安裝<code>GlassIt-VSC</code><br><img src="https://i.imgur.com/xZdmLsF.png" alt=""></p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>ctrl+alt+z 增加透明度<br>ctrl+alt+c 減少透明度</p>
+<p>大功告成 輕鬆簡單</p>
+]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>vscode</tag>
       </tags>
   </entry>
 </search>

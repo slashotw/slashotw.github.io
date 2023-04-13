@@ -1,29 +1,24 @@
 <!DOCTYPE html>
-<html lang='zh-TW'>
-
+<html lang="zh-TW,default">
 <head>
-  <meta name="generator" content="Hexo 6.1.0">
-  <meta charset="utf-8">
-  
-
-  <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel='dns-prefetch' href='//unpkg.com'>
-
-  <meta name="renderer" content="webkit">
-  <meta name="force-rendering" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="HandheldFriendly" content="True" >
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="theme-color" content="#f8f8f8">
-  <title>Gunicorn教學 - s1ashのBlog</title>
-
-  
-
-  
-    <meta name="description" content="細數flask使用gunicorn的坑…">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="slash">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://evan.beee.top" crossorigin>
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://kvn1027.github.io/2022/06/01/gunicorn01/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="細數flask使用gunicorn的坑…">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gunicorn教學">
 <meta property="og:url" content="https://kvn1027.github.io/2022/06/01/gunicorn01/index.html">
@@ -39,69 +34,293 @@
 <meta property="article:tag" content="flask">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgur.com/35b5xSR.png">
-  
-  
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Gunicorn教學 -
+        
+        slashのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
 
-  <!-- feed -->
-  
+    
+<link rel="stylesheet" href="/assets/fonts.css">
 
-  
+    <!--- Font Part-->
     
-<link rel="stylesheet" href="/css/main.css">
+    
+    
+    
 
-  
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"kvn1027.github.io","root":"/","language":["zh-TW","default"],"path":"search.xml"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[""]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推薦閱讀","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true},"home_banner":{"enable":true,"image":{"light":"/images/bg.jpg","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"welcome 2 my blog :D","subtitle":{"text":["這裡是一個可以讓我亂喵喵ㄉ神奇地方","喵喵喵 喵喵","喵喵喵喵喵喵喵喵喵","meow :D"],"typing_speed":50,"backing_speed":40,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.1","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":20},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"About":{"path":"/about","icon":"fa-regular fa-user"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","announcement":"會更新ㄉ文章多半是卡ㄌ我很久的東西:O","links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
 
-  
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
 
-  
     
-      <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
     
-      <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
     
-      <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
     
-      <link rel="manifest" href="/images/site.webmanifest">
     
-  
-</head>
+    
+<meta name="generator" content="Hexo 6.1.0"></head>
+
 
 <body>
-  
-
-
-
-
-  <div class='l_body' id='start'>
-    <aside class='l_left' layout='post'>
+<div class="progress-bar-container">
     
 
-
-<header class="header">
-
-<div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://i.imgur.com/XhIHL3L.png" onerror="javascript:this.classList.add('error');this.src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/"><div class="main">s1ashのBlog</div><div class="sub normal cap">歐 聽說你找到偶ㄉBlogㄌ</div><div class="sub hover cap" style="opacity:0">喵!</div></a></div>
-<nav class="menu dis-select"><a class="nav-item active" href="/">Blog</a><a class="nav-item" href="/about/">關於我</a></nav></header>
-
-<div class="widgets">
-
-<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目錄</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E8%A6%81%E5%85%88%E7%9F%A5%E9%81%93"><span class="toc-text">你要先知道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E6%AA%94"><span class="toc-text">設定檔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#path"><span class="toc-text">path</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%92%B0%E5%AF%AB"><span class="toc-text">撰寫</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#command"><span class="toc-text">command</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8conf%E8%A8%AD%E5%AE%9A%E6%AA%94-%E5%95%9F%E5%8B%95%E5%B0%88%E6%A1%88"><span class="toc-text">使用conf設定檔 啟動專案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%89%8D%E6%89%80%E6%9C%89gunicorn%E7%9A%84pid"><span class="toc-text">查看目前所有gunicorn的pid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AA%E9%99%A4gunicorn%E4%BB%BB%E5%8B%99"><span class="toc-text">刪除gunicorn任務</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%95%9Fgunicorn%E4%BB%BB%E5%8B%99"><span class="toc-text">重啟gunicorn任務</span></a></li></ol></li></ol></div></div></div>
-
-
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
 </div>
 
 
-    </aside>
-    <div class='l_main'>
-      
+<main class="page-container">
 
-      
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/ur.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                slashのblog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首頁
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/about"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        關於
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首頁
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/about"  >
+                             
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                關於
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
 
 
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">首頁</a><span class="sep"></span><a class="cap breadcrumb" href="/">網誌</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/coding/">coding</a></div><div id="post-meta">發布於&nbsp;<time datetime="2022-05-31T17:50:40.000Z">2022-06-01</time></div></div>
+        </div>
 
-<article class='content md post'>
-  <h1 class="article-title"><span>Gunicorn教學</span></h1>
-  <p>細數flask使用gunicorn的坑…</p>
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">Gunicorn教學</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="https://i.imgur.com/dFFCMeW.png">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">slash</span>
+                            
+                                <span class="author-label"></span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2022-06-01 01:50:40</span>
+        <span class="mobile">2022-06-01 01:50</span>
+        <span class="hover-info">撰寫</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2022-06-01 02:20:39</span>
+            <span class="mobile">2022-06-01 02:20</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/coding/">coding</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/python/">python</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/web-dev/">web dev</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/flask/">flask</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <p>細數flask使用gunicorn的坑…</p>
 <span id="more"></span>
 <h2 id="你要先知道"><a href="#你要先知道" class="headerlink" title="你要先知道"></a>你要先知道</h2><blockquote>
 <p>問題都在log檔案配置上面</p>
@@ -110,186 +329,405 @@
 <h2 id="設定檔"><a href="#設定檔" class="headerlink" title="設定檔"></a>設定檔</h2><p>使用設定檔可以讓你更方便的去啟動gunicorn 不用每次都抄一堆參數，當然如果是小project根本沒差</p>
 <h3 id="path"><a href="#path" class="headerlink" title="path"></a>path</h3><p>假設今天有個flask檔案叫<code>main.py</code>，位於<code>/flaskapp/main.py</code><br>那gunicorn的設定檔就要寫在跟<code>main.py</code>同級的<code>/flaskapp/gun.conf.py</code><br>有些人可能google查到會叫你檔名用gun.conf，但在以前的版本中會出現非常多bug，建議使用<code>gun.conf.py</code>，python檔案去寫。</p>
 </blockquote>
-<h3 id="撰寫"><a href="#撰寫" class="headerlink" title="撰寫"></a>撰寫</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="comment"># 綁定要監聽的port跟ip，</span></span><br><span class="line"><span class="comment"># 假設main.app是app.run(host=&#x27;0.0.0.0&#x27;,port=&#x27;7654&#x27;)，那就這樣寫</span></span><br><span class="line">bind = <span class="string">&#x27;0.0.0.0:7654&#x27;</span> </span><br><span class="line"><span class="comment"># 同時執行的進程數，推薦為當前CPU個數*2+1</span></span><br><span class="line">workers = <span class="number">1</span>  </span><br><span class="line"><span class="comment"># 等待服務客戶的數量，最大為2048，即最大掛起的連接數</span></span><br><span class="line">backlog = <span class="number">2048</span></span><br><span class="line"><span class="comment"># sync, gevent,meinheld  </span></span><br><span class="line"><span class="comment"># 工作模式選擇，默認為sync，這裡設定為gevent異步 </span></span><br><span class="line">worker_class = <span class="string">&quot;gevent&quot;</span>  </span><br><span class="line"><span class="comment"># 默認的最大客戶端並發數量</span></span><br><span class="line">max_requests = <span class="number">2000</span></span><br><span class="line"><span class="comment"># 是否在後台運行</span></span><br><span class="line">daemon = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 當代碼有修改時，自動重啟workers。適用於開發環境。           </span></span><br><span class="line">reload = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 在keep-alive連接上等待請求的秒數，默認情況下值為2。一般設定在1~5秒之間。            </span></span><br><span class="line"><span class="comment"># 就是今天client發送請求之後要監聽多久之後才斷開，單位為秒，下面這就是5秒的意思</span></span><br><span class="line">keepalive = <span class="number">5</span></span><br><span class="line"><span class="comment"># 設置pid文件的文件名，當前使用的pid號會寫在上面</span></span><br><span class="line">pidfile = <span class="string">&#x27;./gunicore.pid&#x27;</span></span><br><span class="line"><span class="comment"># debug error warning error critical</span></span><br><span class="line">loglevel = <span class="string">&#x27;info&#x27;</span> </span><br><span class="line"><span class="comment"># 訪問、錯誤日誌(log)的路徑還有檔名</span></span><br><span class="line">accesslog = <span class="built_in">str</span>(<span class="string">&#x27;gunicorn_acess.log&#x27;</span>)</span><br><span class="line">errorlog  = <span class="built_in">str</span>(<span class="string">&#x27;gunicorn_error.log&#x27;</span>)</span><br><span class="line"><span class="comment"># log的格式</span></span><br><span class="line">access_log_format = <span class="string">&#x27;%(&#123;X-Real-IP&#125;i)s %(t)s &quot;%(r)s&quot; %(s)s %(b)s &quot;%(f)s&quot; &quot;%(a)s&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
-<h2 id="command"><a href="#command" class="headerlink" title="command"></a>command</h2><h3 id="使用conf設定檔-啟動專案"><a href="#使用conf設定檔-啟動專案" class="headerlink" title="使用conf設定檔 啟動專案"></a>使用conf設定檔 啟動專案</h3><p>後面那個<code>main:app</code><br>main指的是要啟用的flask app的檔名 指的是<code>main.py</code><br>app指的就是在<code>main.py</code>中要啟用的module名字，就是<code>app = Flask(__name__)</code>的那個app<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gunicorn --config=gun.conf.py main:app</span><br></pre></td></tr></table></figure></p>
-<h3 id="查看目前所有gunicorn的pid"><a href="#查看目前所有gunicorn的pid" class="headerlink" title="查看目前所有gunicorn的pid"></a>查看目前所有gunicorn的pid</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pstree -ap | grep gunicorn</span><br></pre></td></tr></table></figure>
-<p>成功之後會看到這樣<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://i.imgur.com/35b5xSR.png" alt=""><br>最上面的為根進程，一定要刪根，刪子的話會刪不掉ㄛ</p>
-<h3 id="刪除gunicorn任務"><a href="#刪除gunicorn任務" class="headerlink" title="刪除gunicorn任務"></a>刪除gunicorn任務</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kill -p &lt;root pid&gt;</span><br><span class="line">kill -p 17768</span><br></pre></td></tr></table></figure>
-<h3 id="重啟gunicorn任務"><a href="#重啟gunicorn任務" class="headerlink" title="重啟gunicorn任務"></a>重啟gunicorn任務</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kill -HUP &lt;root pid&gt;</span><br><span class="line">kill -HUP 17768</span><br></pre></td></tr></table></figure>
-  
-<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>授權條款</span></div><div class="body"><p>本文採用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 許可協議，轉載須註明出處。</p>
-</div></section></div>
+<h3 id="撰寫"><a href="#撰寫" class="headerlink" title="撰寫"></a>撰寫</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"><span class="comment"># 綁定要監聽的port跟ip，</span></span><br><span class="line"><span class="comment"># 假設main.app是app.run(host=&#x27;0.0.0.0&#x27;,port=&#x27;7654&#x27;)，那就這樣寫</span></span><br><span class="line">bind = <span class="string">&#x27;0.0.0.0:7654&#x27;</span> </span><br><span class="line"><span class="comment"># 同時執行的進程數，推薦為當前CPU個數*2+1</span></span><br><span class="line">workers = <span class="number">1</span>  </span><br><span class="line"><span class="comment"># 等待服務客戶的數量，最大為2048，即最大掛起的連接數</span></span><br><span class="line">backlog = <span class="number">2048</span></span><br><span class="line"><span class="comment"># sync, gevent,meinheld  </span></span><br><span class="line"><span class="comment"># 工作模式選擇，默認為sync，這裡設定為gevent異步 </span></span><br><span class="line">worker_class = <span class="string">&quot;gevent&quot;</span>  </span><br><span class="line"><span class="comment"># 默認的最大客戶端並發數量</span></span><br><span class="line">max_requests = <span class="number">2000</span></span><br><span class="line"><span class="comment"># 是否在後台運行</span></span><br><span class="line">daemon = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 當代碼有修改時，自動重啟workers。適用於開發環境。           </span></span><br><span class="line">reload = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 在keep-alive連接上等待請求的秒數，默認情況下值為2。一般設定在1~5秒之間。            </span></span><br><span class="line"><span class="comment"># 就是今天client發送請求之後要監聽多久之後才斷開，單位為秒，下面這就是5秒的意思</span></span><br><span class="line">keepalive = <span class="number">5</span></span><br><span class="line"><span class="comment"># 設置pid文件的文件名，當前使用的pid號會寫在上面</span></span><br><span class="line">pidfile = <span class="string">&#x27;./gunicore.pid&#x27;</span></span><br><span class="line"><span class="comment"># debug error warning error critical</span></span><br><span class="line">loglevel = <span class="string">&#x27;info&#x27;</span> </span><br><span class="line"><span class="comment"># 訪問、錯誤日誌(log)的路徑還有檔名</span></span><br><span class="line">accesslog = <span class="built_in">str</span>(<span class="string">&#x27;gunicorn_acess.log&#x27;</span>)</span><br><span class="line">errorlog  = <span class="built_in">str</span>(<span class="string">&#x27;gunicorn_error.log&#x27;</span>)</span><br><span class="line"><span class="comment"># log的格式</span></span><br><span class="line">access_log_format = <span class="string">&#x27;%(&#123;X-Real-IP&#125;i)s %(t)s &quot;%(r)s&quot; %(s)s %(b)s &quot;%(f)s&quot; &quot;%(a)s&quot;&#x27;</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="command"><a href="#command" class="headerlink" title="command"></a>command</h2><h3 id="使用conf設定檔-啟動專案"><a href="#使用conf設定檔-啟動專案" class="headerlink" title="使用conf設定檔 啟動專案"></a>使用conf設定檔 啟動專案</h3><p>後面那個<code>main:app</code><br>main指的是要啟用的flask app的檔名 指的是<code>main.py</code><br>app指的就是在<code>main.py</code>中要啟用的module名字，就是<code>app = Flask(__name__)</code>的那個app<br><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gunicorn --config=gun.conf.py main:app</span><br></pre></td></tr></table></figure></div></p>
+<h3 id="查看目前所有gunicorn的pid"><a href="#查看目前所有gunicorn的pid" class="headerlink" title="查看目前所有gunicorn的pid"></a>查看目前所有gunicorn的pid</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pstree -ap | grep gunicorn</span><br></pre></td></tr></table></figure></div>
+<p>成功之後會看到這樣<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/35b5xSR.png"
+                      alt=""
+                ><br>最上面的為根進程，一定要刪根，刪子的話會刪不掉ㄛ</p>
+<h3 id="刪除gunicorn任務"><a href="#刪除gunicorn任務" class="headerlink" title="刪除gunicorn任務"></a>刪除gunicorn任務</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kill -p &lt;root pid&gt;</span><br><span class="line">kill -p 17768</span><br></pre></td></tr></table></figure></div>
+<h3 id="重啟gunicorn任務"><a href="#重啟gunicorn任務" class="headerlink" title="重啟gunicorn任務"></a>重啟gunicorn任務</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kill -HUP &lt;root pid&gt;</span><br><span class="line">kill -HUP 17768</span><br></pre></td></tr></table></figure></div>
+            </div>
 
-</article>
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>標題:</strong> Gunicorn教學</li>
+        <li><strong>作者:</strong> slash</li>
+        <li><strong>撰寫于:</strong> 2022-06-01 01:50:40</li>
+        
+            <li>
+                <strong>更新于:</strong> 2022-06-01 02:20:39
+            </li>
+        
+        <li>
+            <strong>連結:</strong> https://slasholy.tw/2022/06/01/gunicorn01/
+        </li>
+        <li>
+            <strong>版權宣告:</strong> 本作品采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
 
-<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下來閱讀</span></section><section class="body fs14"><a id="next" href="/2022/05/31/cpp-spin-donut/">會轉的ASCII甜甜圈<span class="note">較早</span></a><div class="line"></div><a id="prev" href="/2022/06/03/nginx-cloudflare-rip/">Nginx繞過Cloudflare等等CDN獲取用戶真實IP<span class="note">較新</span></a></section></div>
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/python/">#python</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/web-dev/">#web dev</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/flask/">#flask</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2022/06/03/nginx-cloudflare-rip/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Nginx繞過Cloudflare等等CDN獲取用戶真實IP</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2022/05/31/cpp-spin-donut/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">會轉的ASCII甜甜圈</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
 
 
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此頁目錄</div>
+        <div class="page-title">Gunicorn教學</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E8%A6%81%E5%85%88%E7%9F%A5%E9%81%93"><span class="nav-text">你要先知道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A%E6%AA%94"><span class="nav-text">設定檔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#path"><span class="nav-text">path</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%B0%E5%AF%AB"><span class="nav-text">撰寫</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#command"><span class="nav-text">command</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8conf%E8%A8%AD%E5%AE%9A%E6%AA%94-%E5%95%9F%E5%8B%95%E5%B0%88%E6%A1%88"><span class="nav-text">使用conf設定檔 啟動專案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%89%8D%E6%89%80%E6%9C%89gunicorn%E7%9A%84pid"><span class="nav-text">查看目前所有gunicorn的pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%AA%E9%99%A4gunicorn%E4%BB%BB%E5%8B%99"><span class="nav-text">刪除gunicorn任務</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%95%9Fgunicorn%E4%BB%BB%E5%8B%99"><span class="nav-text">重啟gunicorn任務</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
 
 
+                
 
+            </div>
+            
+            
 
+        </div>
 
-      
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本網誌所有文章除特別聲明外，均採用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 授權條款。轉載請註明出處。</p>
-<p>本站由 <a href="https://kvn1027.github.io/">@s1ash</a> 建立，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.6.1" title="v1.6.1">Stellar</a> 作為主題。</p>
-</div></footer>
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">slash</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        讀者&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        閱覽&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container"><?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 框架</span>
+                <br>
+            <span class="theme-version-container">主題&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.1</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2022/5/2 11:45:14
+            </div>
+            <div>
+                博客已運行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小時 <span class="odometer" id="runtime_minutes"></span> 分鐘 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
 
-      <div class='float-panel mobile-only blur' style='display:none'>
-  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
-    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
-  </button>
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
 </div>
 
     </div>
-  </div>
-  <div class='scripts'>
-    <script type="text/javascript">
-  stellar = {
-    // 懒加载 css https://github.com/filamentgroup/loadCSS
-    loadCSS: (href, before, media, attributes) => {
-      var doc = window.document;
-      var ss = doc.createElement("link");
-      var ref;
-      if (before) {
-        ref = before;
-      } else {
-        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
-        ref = refs[refs.length - 1];
-      }
-      var sheets = doc.styleSheets;
-      if (attributes) {
-        for (var attributeName in attributes) {
-          if (attributes.hasOwnProperty(attributeName)) {
-            ss.setAttribute(attributeName, attributes[attributeName]);
-          }
-        }
-      }
-      ss.rel = "stylesheet";
-      ss.href = href;
-      ss.media = "only x";
-      function ready(cb) {
-        if (doc.body) {
-          return cb();
-        }
-        setTimeout(function () {
-          ready(cb);
-        });
-      }
-      ready(function () {
-        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
-      });
-      var onloadcssdefined = function (cb) {
-        var resolvedHref = ss.href;
-        var i = sheets.length;
-        while (i--) {
-          if (sheets[i].href === resolvedHref) {
-            return cb();
-          }
-        }
-        setTimeout(function () {
-          onloadcssdefined(cb);
-        });
-      };
-      function loadCB() {
-        if (ss.addEventListener) {
-          ss.removeEventListener("load", loadCB);
-        }
-        ss.media = media || "all";
-      }
-      if (ss.addEventListener) {
-        ss.addEventListener("load", loadCB);
-      }
-      ss.onloadcssdefined = onloadcssdefined;
-      onloadcssdefined(loadCB);
-      return ss;
-    },
 
-    // 从 butterfly 和 volantis 获得灵感
-    loadScript: (src, opt) => new Promise((resolve, reject) => {
-      var script = document.createElement('script');
-      script.src = src;
-      if (opt) {
-        for (let key of Object.keys(opt)) {
-          script[key] = opt[key]
-        }
-      } else {
-        // 默认异步，如果需要同步，第二个参数传入 {} 即可
-        script.async = true
-      }
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    }),
+    <div class="image-viewer-container">
+    <img src="">
+</div>
 
-    // https://github.com/jerryc127/hexo-theme-butterfly
-    jQuery: (fn) => {
-      if (typeof jQuery === 'undefined') {
-        stellar.loadScript(stellar.plugins.jQuery).then(fn)
-      } else {
-        fn()
-      }
-    }
-  };
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.6.1';
-  stellar.config = {
-    date_suffix: {
-      just: '剛剛',
-      min: '分鐘前',
-      hour: '小時前',
-      day: '天前',
-      month: '個月前',
-    },
-  };
 
-  // required plugins (only load if needs)
-  stellar.plugins = {
-    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
-    sitesjs: '/js/plugins/sites.js',
-    friendsjs: '/js/plugins/friends.js',
-  };
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜尋..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
 
-  // optional plugins
-  if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
-  }
-  if ('' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
-  }
-  if ('false' == 'true') {
-    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
-  }
-</script>
+    
 
-<!-- required -->
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/layouts/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
 
   
-<script src="/js/main.js" async></script>
+<script src="/js/plugins/typed.js"></script>
 
 
 
-<!-- optional -->
 
 
 
-<!-- inject -->
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
 
 
-  </div>
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         tex2jax: {

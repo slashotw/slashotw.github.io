@@ -316,7 +316,7 @@
   font-size: 3.2rem;
   font-weight: bold;
   margin: 10px 0 30px 0;
-  line-height: 1;
+  line-height: 1.4;
   color: var(--second-text-color);
   font-family: 'Open Sans', 'Noto Sans', sans-serif, 'Noto Sans SC', sans-serif, "Noto Sans SC", sans-serif;
 }
@@ -603,6 +603,16 @@
     left: 0 !important;
     display: none !important;
   }
+}
+.post-page-container figure.image-caption img {
+  margin-bottom: 0;
+}
+.post-page-container figure.image-caption figcaption {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--third-text-color);
 }
 @media (prefers-color-scheme: dark) {
   .article-title img {

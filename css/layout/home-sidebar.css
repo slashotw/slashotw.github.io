@@ -305,6 +305,9 @@
 .home-sidebar-container .sidebar-links {
   overflow: hidden;
 }
+.home-sidebar-container .sidebar-links[marginTop] {
+  margin-top: 22.8px;
+}
 .home-sidebar-container .sidebar-links .site-info {
   background-color: var(--second-background-color);
   margin: -15px -15px 10px -15px;
